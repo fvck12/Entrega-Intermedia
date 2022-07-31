@@ -11,21 +11,18 @@ def inicio(request):
     
     return render(request, "index.html")
 
+
 def about(request):
     
     return render(request, "about.html")
 
-def productos(request):
-    
-    return render(request, "productos.html")
 
 def contact(request):
     
     return render(request, "contact.html")
 
+
 def formularioProductos(request):
-    
-    
 
     if request.method == "POST":
 
@@ -51,6 +48,7 @@ def busquedaProductos(request):
 
     return render(request, "busquedaProducto.html")
 
+
 def buscar(request):
 
     if request.GET["Nombre"]:
@@ -68,6 +66,7 @@ def buscar(request):
 
 
     return HttpResponse(respuesta)
+
 
 def lista_productos(request):
     productos = Productos.objects.all()
@@ -90,6 +89,7 @@ def eliminar_producto(request, id):
         contexto= {"productos": productos}
 
         return render(request, "listaProductos.html", contexto)
+        
 
 def editar_producto(request, id):
 
