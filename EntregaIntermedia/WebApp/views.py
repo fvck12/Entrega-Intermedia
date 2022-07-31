@@ -75,3 +75,20 @@ def lista_productos(request):
     contexto= {"productos": productos}
 
     return render(request, "listaProductos.html", contexto)
+
+
+def eliminar_producto(request, id):
+    
+    if request.method=='POST':
+
+        productos = Productos.objects.get(id=id)
+
+        productos.delete()
+        
+        productos = Productos.objects.all()
+
+        contexto= {"productos": productos}
+
+        return render(request, "listaProductos.html", contexto)
+
+

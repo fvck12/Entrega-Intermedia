@@ -17,13 +17,14 @@
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <h1><strong>Lista de productos</strong></h1>
+                    <h1><strong><center>Lista de productos</center></strong></h1>
                     <table>
                         <tr>
                             <th scope="col">Imagen</th>
                             <th scope="col">Producto</th>
                             <th scope="col">Stock</th>
-                            <th scope="col">Precio</th>                        
+                            <th scope="col">Precio</th>
+                            <th scope="col">Opciones</th>                       
                         </tr>                   
                             <ul>
                             
@@ -35,12 +36,18 @@
                                     </td>
                                     <td>{{producto.Nombre}}</td>
                                     <td>{{producto.Stock}}</td>
-                                    <td>{{producto.Precio}}</td>                               
-                                 </tr>                           
+                                    <td>{{producto.Precio}}</td> 
+                                    <td>
+                                        <form action= "{% url 'eliminarProducto' producto.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                                            <button type="submit">Eliminar</button>
+
+                                    </td>                              
+                                </tr>                           
                                 {% endfor %}   
                                                    
-                            </ul>                       
+                            </ul>                                                  
                     </table>
+                    <a href="{% url 'formProductos'}">Añade producto</a> 
                 </div>
             </div>
         </article>
