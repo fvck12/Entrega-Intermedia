@@ -18,6 +18,11 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <h1><strong><center>Lista de productos</center></strong></h1>
+                    <form action= "{% url 'buscar' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
+
+                        <p>Busqueda: <input type= "text" name= "Nombre" placeholder="Escriba aqui el producto"> <input type="submit" value="Buscar"></p>                      
+                         
+                     </form>
                     <table>
                         <tr>
                             <th scope="col">Imagen</th>
