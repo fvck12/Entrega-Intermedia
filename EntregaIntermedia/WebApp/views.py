@@ -84,11 +84,45 @@ def eliminar_producto(request, id):
         productos = Productos.objects.get(id=id)
 
         productos.delete()
-        
+
         productos = Productos.objects.all()
 
         contexto= {"productos": productos}
 
         return render(request, "listaProductos.html", contexto)
+
+def editar_producto(request, id):
+
+    productos = Productos.objects.get(id=id)
+
+    if request.method == "POST":
+
+        formularioProductos= FormProductos(request.POST, request.FILES)
+        
+        if formularioProductos.is_valid():
+
+            data= formularioProductos.cleaned_data
+
+            productos.Nombre=data["Nombre"]
+            productos.Stock=data["Stock"] 
+            productos.Precio=data["Precio"]
+            productos.Foto=data["Foto"]
+
+            productos.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioProductos= FormProductos(initial={
+            "Nombre":productos.Nombre,
+            "Stock":productos.Stock,
+            "Precio":productos.Precio,
+            "Foto":productos.Foto,
+        })
+
+    return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
+
+
 
 

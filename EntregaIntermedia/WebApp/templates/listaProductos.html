@@ -40,6 +40,9 @@
                                     <td>
                                         <form action= "{% url 'eliminarProducto' producto.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                             <button type="submit">Eliminar</button>
+                                        <button>
+                                            <a href="{% url 'editarProducto' producto.id %}">Editar</a> 
+                                        </button>
 
                                     </td>                              
                                 </tr>                           
@@ -47,7 +50,7 @@
                                                    
                             </ul>                                                  
                     </table>
-                    <a href="{% url 'formProductos'}">Añade producto</a> 
+                    <a href="{% url 'formProductos' %}">Añade producto</a> 
                 </div>
             </div>
         </article>
