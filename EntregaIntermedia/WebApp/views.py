@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -67,3 +68,10 @@ def buscar(request):
 
 
     return HttpResponse(respuesta)
+
+def lista_productos(request):
+    productos = Productos.objects.all()
+
+    contexto= {"productos": productos}
+
+    return render(request, "listaProductos.html", contexto)
