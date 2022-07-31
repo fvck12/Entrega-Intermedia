@@ -34,12 +34,12 @@
                             {% for producto in productos  %}
                         
                             <tr>
-                                <td>{{producto.Nombre}}</td>
-                                <td>{{producto.Stock}}</td>
-                                <td>{{producto.Precio}}</td>
                                 <td>
                                 <img src="{{producto.Foto.url}}" width="200" height="200"> 
-                                </td>   
+                                </td>
+                                <td>{{producto.Nombre}}</td>
+                                <td>{{producto.Stock}}</td>
+                                <td>{{producto.Precio}}</td>                               
                              </tr>                           
                             {% endfor %}   
                                                
