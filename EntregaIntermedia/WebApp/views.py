@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from WebApp.models import Productos
+from WebApp.forms import FormProductos
+
 # Create your views here.
 
 def inicio(request):
@@ -11,10 +14,56 @@ def about(request):
     
     return render(request, "about.html")
 
-def post(request):
+def productos(request):
     
-    return render(request, "post.html")
+    return render(request, "productos.html")
 
 def contact(request):
     
     return render(request, "contact.html")
+
+def formularioProductos(request):
+    
+    
+
+    if request.method == "POST":
+
+        formularioProductos= FormProductos(request.POST, request.FILES)
+        
+        if formularioProductos.is_valid():
+
+            data= formularioProductos.cleaned_data
+
+            productos = Productos(Nombre=data["Nombre"], Stock=data["Stock"], Precio=data["Precio"], Foto=data["Foto"])
+            productos.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioProductos= FormProductos(request.POST) 
+
+    return render(request, "formProductos.html", {"formularioProductos": formularioProductos})
+
+
+def busquedaProductos(request):
+
+    return render(request, "busquedaProducto.html")
+
+def buscar(request):
+
+    if request.GET["Nombre"]:
+
+        Nombre= request.GET["Nombre"]
+
+        productos = Productos.objects.filter(Nombre__icontains=Nombre)
+
+        return render(request, "resultadoBusqueda.html", {"productos": productos, "Nombre": Nombre})
+    
+    else:
+
+        respuesta= "No enviaste datos"
+
+
+
+    return HttpResponse(respuesta)

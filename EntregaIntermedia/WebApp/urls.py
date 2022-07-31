@@ -1,10 +1,14 @@
 from django.urls import path
 
-from WebApp.views import inicio, about, post, contact
+from WebApp.views import inicio, about, productos, contact, formularioProductos, busquedaProductos, buscar
 
 urlpatterns = [
     path('', inicio, name="inicio"),
     path('about', about, name="about"),
-    path('post', post, name="post"),
-    path('contact', contact, name="contact"),
+    path('productos/', productos, name="productos"),
+    path('contact/', contact, name="contact"),
+    path('formProductos/', formularioProductos, name="formProductos"),
+    path('busquedaProductos/', busquedaProductos, name="busquedaProductos"),
+    path('buscar/', buscar, name="buscar"),
+
 ]
