@@ -137,14 +137,12 @@ def formularioEmpleados(request):
             empleados = Empleado(
                 nombre=data["nombre"], 
                 apellido=data["apellido"], 
-                sexo=data["sexo"],
                 fecha_nacimiento=data["fecha_nacimiento"], 
                 dni=data["dni"], 
                 email=data["email"], 
                 direccion=data["direccion"], 
                 telefono=data["telefono"],
                 puesto=data["puesto"],
-                horario=data["horario"],
                 foto_empleado=data["foto_empleado"],
             )
             empleados.save()
@@ -156,3 +154,66 @@ def formularioEmpleados(request):
         formularioEmpleados= FormEmpleado(request.POST) 
 
     return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
+
+def lista_empleados(request):
+    empleados = Empleado.objects.all()
+
+    contexto= {"empleados": empleados}
+
+    return render(request, "listaEmpleados.html", contexto)
+
+def editar_empleado(request, id):
+
+    empleado = Empleado.objects.get(id=id)
+
+    if request.method == "POST":
+
+        formularioEmpleado= FormEmpleado(request.POST, request.FILES)
+        
+        if formularioEmpleado.is_valid():
+
+            data= formularioEmpleado.cleaned_data
+
+            empleado.nombre=data["nombre"]
+            empleado.apellido=data["apellido"]
+            empleado.fecha_nacimiento=data["fecha_nacimiento"]
+            empleado.dni=data["dni"]
+            empleado.email=data["email"]
+            empleado.direccion=data["direccion"]
+            empleado.telefono=data["telefono"]
+            empleado.puesto=data["puesto"]
+            empleado.foto_empleado=data["foto_empleado"]
+
+            empleado.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioEmpleado= FormProductos(initial={
+            "nombre":empleado.nombre,
+            "apellido":empleado.apellido,
+            "fecha_nacimiento":empleado.fecha_nacimiento,
+            "dni":empleado.dni,
+            "email":empleado.email,
+            "direccion":empleado.direccion,
+            "telefono":empleado.telefono,
+            "puesto":empleado.puesto,
+            "foto_empleado":empleado.foto_empleado,
+        })
+
+    return render(request, "editarProducto.html", {"formularioEmpleado": formularioEmpleado, "id": empleado.id})
+
+def eliminar_empleado(request, id):
+    
+    if request.method=='POST':
+
+        empleado = Empleado.objects.get(id=id)
+
+        empleado.delete()
+
+        empleado = Empleado.objects.all()
+
+        contexto = {"empleado": empleado}
+
+        return render(request, "listaEmpleados.html", contexto)

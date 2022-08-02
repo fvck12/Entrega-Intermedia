@@ -1,5 +1,5 @@
 from django.urls import path
-from WebApp.views import inicio, about, contact, formularioProductos, busquedaProductos, buscar, lista_productos, eliminar_producto, editar_producto, formularioEmpleados
+from WebApp.views import inicio, about, contact, formularioProductos, busquedaProductos, buscar, lista_productos, eliminar_producto, editar_producto, formularioEmpleados, lista_empleados, editar_empleado, eliminar_empleado
 
 urlpatterns = [
     path('', inicio, name="inicio"),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('eliminarProducto/<int:id>', eliminar_producto, name="eliminarProducto"),
     path('editarProducto/<int:id>', editar_producto, name="editarProducto"),
     path('formEmpleado/', formularioEmpleados, name="formEmpleado"),
+    path('listaEmpleados/', lista_empleados, name="listaempleados"),
+    path('editarEmpleado/<int:id>', editar_empleado, name="editarEmpleado"),
+    path('eliminarEmpleado/<int:id>', eliminar_empleado, name="eliminarEmpleado"),
 ]
