@@ -18,7 +18,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     
-                <p>Estamos buscando el producto: <strong>{{Nombre}}</strong></p>
+                <p>Estamos buscando el producto: <strong>{{nombre}}</strong></p>
                 <table>
                     <tr>
                         <th scope="col">Imagen</th>
@@ -37,9 +37,9 @@
                                 <td>
                                 <img src="{{producto.Foto.url}}" width="100" height="100"> 
                                 </td>
-                                <td>{{producto.Nombre}}</td>
-                                <td>{{producto.Stock}}</td>
-                                <td>{{producto.Precio}}</td>                               
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.stock}}</td>
+                                <td>{{producto.precio}}</td>                               
                              </tr>                           
                             {% endfor %}   
                                                

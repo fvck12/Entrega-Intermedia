@@ -2,8 +2,8 @@ from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from WebApp.models import Productos
-from WebApp.forms import FormProductos
+from WebApp.models import Productos, Empleado, Persona
+from WebApp.forms import FormProductos, FormEmpleado
 
 # Create your views here.
 
@@ -32,7 +32,7 @@ def formularioProductos(request):
 
             data= formularioProductos.cleaned_data
 
-            productos = Productos(Nombre=data["Nombre"], Stock=data["Stock"], Precio=data["Precio"], Foto=data["Foto"])
+            productos = Productos(nombre=data["Nombre"], stock=data["Stock"], precio=data["Precio"], Foto=data["Foto"])
             productos.save()
 
             return render(request, "index.html")
@@ -53,11 +53,11 @@ def buscar(request):
 
     if request.GET["Nombre"]:
 
-        Nombre= request.GET["Nombre"]
+        nombre= request.GET["Nombre"]
 
-        productos = Productos.objects.filter(Nombre__icontains=Nombre)
+        productos = Productos.objects.filter(Nombre__icontains=nombre)
 
-        return render(request, "resultadoBusqueda.html", {"productos": productos, "Nombre": Nombre})
+        return render(request, "resultadoBusqueda.html", {"productos": productos, "Nombre": nombre})
     
     else:
 
@@ -103,9 +103,9 @@ def editar_producto(request, id):
 
             data= formularioProductos.cleaned_data
 
-            productos.Nombre=data["Nombre"]
-            productos.Stock=data["Stock"] 
-            productos.Precio=data["Precio"]
+            productos.nombre=data["Nombre"]
+            productos.stock=data["Stock"] 
+            productos.precio=data["Precio"]
             productos.Foto=data["Foto"]
 
             productos.save()
@@ -115,14 +115,44 @@ def editar_producto(request, id):
     else:
         
         formularioProductos= FormProductos(initial={
-            "Nombre":productos.Nombre,
-            "Stock":productos.Stock,
-            "Precio":productos.Precio,
+            "Nombre":productos.nombre,
+            "Stock":productos.stock,
+            "Precio":productos.precio,
             "Foto":productos.Foto,
         })
 
     return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
 
 
+def formularioEmpleados(request):
 
+    if request.method == "POST":
 
+        formularioEmpleados = FormEmpleado(request.POST, request.FILES)
+        
+        if formularioEmpleados.is_valid():
+
+            data = formularioEmpleados.cleaned_data
+
+            empleados = Empleado(
+                nombre=data["nombre"], 
+                apellido=data["apellido"], 
+                sexo=data["sexo"],
+                fecha_nacimiento=data["fecha_nacimiento"], 
+                dni=data["dni"], 
+                email=data["email"], 
+                direccion=data["direccion"], 
+                telefono=data["telefono"],
+                puesto=data["puesto"],
+                horario=data["horario"],
+                foto_empleado=data["foto_empleado"],
+            )
+            empleados.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioEmpleados= FormEmpleado(request.POST) 
+
+    return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
