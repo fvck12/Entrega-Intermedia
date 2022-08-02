@@ -199,11 +199,11 @@ def editar_empleado(request, id):
 
     if request.method == "POST":
 
-        formularioEmpleado= FormEmpleado(request.POST, request.FILES)
+        formularioEmpleados = FormEmpleado(request.POST, request.FILES)
         
-        if formularioEmpleado.is_valid():
+        if formularioEmpleados.is_valid():
 
-            data= formularioEmpleado.cleaned_data
+            data= formularioEmpleados.cleaned_data
 
             empleado.nombre=data["nombre"]
             empleado.apellido=data["apellido"]
@@ -221,7 +221,7 @@ def editar_empleado(request, id):
 
     else:
         
-        formularioEmpleado= FormProductos(initial={
+        formularioEmpleados = FormEmpleado(initial={
             "nombre":empleado.nombre,
             "apellido":empleado.apellido,
             "fecha_nacimiento":empleado.fecha_nacimiento,
@@ -233,7 +233,7 @@ def editar_empleado(request, id):
             "foto_empleado":empleado.foto_empleado,
         })
 
-    return render(request, "editarProducto.html", {"formularioEmpleado": formularioEmpleado, "id": empleado.id})
+    return render(request, "editarEmpleado.html", {"formularioEmpleados": formularioEmpleados, "id": empleado.id})
 
 ############################## Clientes ##############################
 

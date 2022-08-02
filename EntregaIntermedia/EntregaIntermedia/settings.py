@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'WebApp',
-    'phonenumber_field',
     'djmoney',
+    'import_export',
 ]
 
 MIDDLEWARE = [

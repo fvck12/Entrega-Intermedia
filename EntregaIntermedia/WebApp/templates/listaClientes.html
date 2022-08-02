@@ -29,7 +29,8 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">email</th>      
                             <th scope="col">Telefono</th>    
-                            <th scope="col">Nombre de Usuario</th>        
+                            <th scope="col">Nombre de Usuario</th> 
+                            <th scope="col">Opciones</th>        
                         </tr>                   
                             <ul>
                             
@@ -47,7 +48,7 @@
                                         <form action= "{% url 'eliminarCliente' cliente.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                             <button type="submit">Eliminar</button>
                                         <button>
-                                            <a href="{% url 'eliminarCliente' cliente.id %}">Editar</a> 
+                                            <a href="{% url 'editarCliente' cliente.id %}">Editar</a> 
                                         </button>
 
                                     </td>                              

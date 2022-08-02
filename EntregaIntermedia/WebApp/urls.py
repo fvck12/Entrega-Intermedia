@@ -19,14 +19,14 @@ urlpatterns = [
     path('formEmpleado/', formularioEmpleados, name="formEmpleado"),
     path('busquedaEmpleado/', busquedaEmpleado, name="busquedaEmpleado"),
     path('buscarEmpleado/', buscarEmpleado, name="buscarEmpleado"),
-    path('listaEmpleados/', lista_empleados, name="listaempleados"),
+    path('listaEmpleados/', lista_empleados, name="listaEmpleados"),
     path('editarEmpleado/<int:id>', editar_empleado, name="editarEmpleado"),
     path('eliminarEmpleado/<int:id>', eliminar_empleado, name="eliminarEmpleado"),
 
     path('formCliente/', formularioClientes, name="formCliente"),
     path('busquedaCliente/', busquedaCliente, name="busquedaCliente"),
     path('buscarCliente/', buscarCliente, name="buscarCliente"),
-    path('listaClientes/', lista_clientes, name="listaclientes"),
+    path('listaClientes/', lista_clientes, name="listaClientes"),
     path('editarCliente/<int:id>', editar_cliente, name="editarCliente"),
     path('eliminarCliente/<int:id>', eliminar_cliente, name="eliminarCliente"),
 ]

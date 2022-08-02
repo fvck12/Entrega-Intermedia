@@ -22,7 +22,7 @@ class FormEmpleado(forms.ModelForm):
 
     class Meta:
         model = Empleado
-        fields = ['sexo', 'horario']
+        fields = ['sexo', 'horario', 'salario']
     
 
 class FormCliente(forms.ModelForm):

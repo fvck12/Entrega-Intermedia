@@ -20,7 +20,7 @@
                     
                     <form action= "{% url 'editarEmpleado' id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
-                        {{formularioEmpleado.as_p}}
+                        {{formularioEmpleados.as_p}}
 
                         <input type="submit" value="Enviar">
                         
