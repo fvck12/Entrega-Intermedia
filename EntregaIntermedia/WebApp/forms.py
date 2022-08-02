@@ -1,6 +1,5 @@
 from django import forms
-
-from WebApp.models import Empleado
+from WebApp.models import Empleado, Cliente
 
 class FormProductos(forms.Form):
 
@@ -9,7 +8,7 @@ class FormProductos(forms.Form):
     precio= forms.IntegerField()
     Foto= forms.ImageField()
 
-class FormEmpleado(forms.Form):
+class FormEmpleado(forms.ModelForm):
     
     nombre = forms.CharField()
     apellido = forms.CharField()
@@ -20,16 +19,24 @@ class FormEmpleado(forms.Form):
     telefono = forms.IntegerField()
     puesto = forms.CharField()
     foto_empleado = forms.ImageField()
-    
+
     class Meta:
         model = Empleado
-        fields = ['sexo',]
-        fields = ['horario',]
-
-class FormCliente(forms.Form):
-
-    nombre_de_usuario = forms.CharField()
-    email = forms.EmailField()
-    telefono = forms.IntegerField()
-
+        fields = ['sexo', 'horario']
     
+
+class FormCliente(forms.ModelForm):
+
+    nombre = forms.CharField()
+    apellido = forms.CharField()
+    fecha_nacimiento = forms.DateField()
+    dni = forms.IntegerField()
+    email = forms.EmailField()
+    direccion = forms.CharField()
+    telefono = forms.IntegerField()
+    nombre_usuario = forms.CharField()
+    foto_cliente = forms.ImageField()
+
+    class Meta:
+        model = Cliente
+        fields = ['sexo']

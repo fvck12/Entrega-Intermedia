@@ -5,22 +5,21 @@ from django.http import HttpResponse
 from WebApp.models import Productos, Empleado, Persona, Cliente
 from WebApp.forms import FormProductos, FormEmpleado, FormCliente
 
-# Create your views here.
+############################## Menu's Principal ##############################
 
 def inicio(request):
     
     return render(request, "index.html")
 
-
 def about(request):
     
     return render(request, "about.html")
-
 
 def contact(request):
     
     return render(request, "contact.html")
 
+############################## Productos ##############################
 
 def formularioProductos(request):
 
@@ -32,7 +31,7 @@ def formularioProductos(request):
 
             data= formularioProductos.cleaned_data
 
-            productos = Productos(nombre=data["Nombre"], stock=data["Stock"], precio=data["Precio"], Foto=data["Foto"])
+            productos = Productos(nombre=data["nombre"], stock=data["stock"], precio=data["precio"], Foto=data["Foto"])
             productos.save()
 
             return render(request, "index.html")
@@ -43,21 +42,19 @@ def formularioProductos(request):
 
     return render(request, "formProductos.html", {"formularioProductos": formularioProductos})
 
-
 def busquedaProductos(request):
 
     return render(request, "busquedaProducto.html")
 
-
 def buscar(request):
 
-    if request.GET["Nombre"]:
+    if request.GET["nombre"]:
 
-        nombre= request.GET["Nombre"]
+        nombre= request.GET["nombre"]
 
-        productos = Productos.objects.filter(Nombre__icontains=nombre)
+        productos = Productos.objects.filter(nombre__icontains=nombre)
 
-        return render(request, "resultadoBusqueda.html", {"productos": productos, "Nombre": nombre})
+        return render(request, "resultadoBusqueda.html", {"productos": productos, "nombre": nombre})
     
     else:
 
@@ -67,14 +64,12 @@ def buscar(request):
 
     return HttpResponse(respuesta)
 
-
 def lista_productos(request):
     productos = Productos.objects.all()
 
     contexto= {"productos": productos}
 
     return render(request, "listaProductos.html", contexto)
-
 
 def eliminar_producto(request, id):
     
@@ -90,7 +85,6 @@ def eliminar_producto(request, id):
 
         return render(request, "listaProductos.html", contexto)
         
-
 def editar_producto(request, id):
 
     productos = Productos.objects.get(id=id)
@@ -103,9 +97,9 @@ def editar_producto(request, id):
 
             data= formularioProductos.cleaned_data
 
-            productos.nombre=data["Nombre"]
-            productos.stock=data["Stock"] 
-            productos.precio=data["Precio"]
+            productos.nombre=data["nombre"]
+            productos.stock=data["stock"] 
+            productos.precio=data["precio"]
             productos.Foto=data["Foto"]
 
             productos.save()
@@ -115,14 +109,15 @@ def editar_producto(request, id):
     else:
         
         formularioProductos= FormProductos(initial={
-            "Nombre":productos.nombre,
-            "Stock":productos.stock,
-            "Precio":productos.precio,
+            "nombre":productos.nombre,
+            "stock":productos.stock,
+            "precio":productos.precio,
             "Foto":productos.Foto,
         })
 
     return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
 
+############################## Empleados ##############################
 
 def formularioEmpleados(request):
 
@@ -136,13 +131,15 @@ def formularioEmpleados(request):
 
             empleados = Empleado(
                 nombre=data["nombre"], 
-                apellido=data["apellido"], 
+                apellido=data["apellido"],
+                sexo=data["sexo"],
                 fecha_nacimiento=data["fecha_nacimiento"], 
                 dni=data["dni"], 
                 email=data["email"], 
                 direccion=data["direccion"], 
                 telefono=data["telefono"],
                 puesto=data["puesto"],
+                horario=data["horario"],
                 foto_empleado=data["foto_empleado"],
             )
             empleados.save()
@@ -155,12 +152,46 @@ def formularioEmpleados(request):
 
     return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
 
+def busquedaEmpleado(request):
+
+    return render(request, "busquedaEmpleado.html")
+
+def buscarEmpleado(request):
+
+    if request.GET["nombre"]:
+
+        nombre= request.GET["nombre"]
+
+        empleados = Empleado.objects.filter(nombre__icontains=nombre)
+
+        return render(request, "resultadoBusqueda_empleado.html", {"empleados": empleados, "nombre": nombre})
+    
+    else:
+
+        respuesta= "No enviaste datos"
+
+    return HttpResponse(respuesta)
+
 def lista_empleados(request):
     empleados = Empleado.objects.all()
 
     contexto= {"empleados": empleados}
 
     return render(request, "listaEmpleados.html", contexto)
+
+def eliminar_empleado(request, id):
+        
+    if request.method=='POST':
+
+        empleado = Empleado.objects.get(id=id)
+
+        empleado.delete()
+
+        empleado = Empleado.objects.all()
+
+        contexto = {"empleado": empleado}
+
+        return render(request, "listaEmpleados.html", contexto)
 
 def editar_empleado(request, id):
 
@@ -204,19 +235,7 @@ def editar_empleado(request, id):
 
     return render(request, "editarProducto.html", {"formularioEmpleado": formularioEmpleado, "id": empleado.id})
 
-def eliminar_empleado(request, id):
-    
-    if request.method=='POST':
-
-        empleado = Empleado.objects.get(id=id)
-
-        empleado.delete()
-
-        empleado = Empleado.objects.all()
-
-        contexto = {"empleado": empleado}
-
-        return render(request, "listaEmpleados.html", contexto)
+############################## Clientes ##############################
 
 def formularioClientes(request):
 
@@ -228,10 +247,17 @@ def formularioClientes(request):
 
             data = formularioClientes.cleaned_data
 
-            clientes = Cliente(
-                nombre_usuario=data["nombre_usuario"], 
+            clientes = Cliente( 
+                nombre=data["nombre"], 
+                apellido=data["apellido"],
+                nombre_usuario=data["nombre_usuario"],
+                sexo=data["sexo"],
+                fecha_nacimiento=data["fecha_nacimiento"], 
+                dni=data["dni"], 
                 email=data["email"], 
+                direccion=data["direccion"], 
                 telefono=data["telefono"],
+                foto_cliente=data["foto_cliente"],
             )
             clientes.save()
 
@@ -243,12 +269,46 @@ def formularioClientes(request):
 
     return render(request, "formClientes.html", {"formularioClientes": formularioClientes})
 
+def busquedaCliente(request):
+
+    return render(request, "busquedaCliente.html")
+
+def buscarCliente(request):
+
+    if request.GET["nombre"]:
+
+        nombre= request.GET["nombre"]
+
+        clientes = Cliente.objects.filter(nombre__icontains=nombre)
+
+        return render(request, "resultadoBusqueda_cliente.html", {"clientes": clientes, "nombre": nombre})
+    
+    else:
+
+        respuesta= "No enviaste datos"
+
+    return HttpResponse(respuesta)
+
 def lista_clientes(request):
     clientes = Cliente.objects.all()
 
     contexto= {"clientes": clientes}
 
     return render(request, "listaClientes.html", contexto)
+
+def eliminar_cliente(request, id):
+    
+    if request.method=='POST':
+
+        cliente = Cliente.objects.get(id=id)
+
+        cliente.delete()
+
+        cliente = Cliente.objects.all()
+
+        contexto = {"cliente": cliente}
+
+        return render(request, "listaClientes.html", contexto)
 
 def editar_cliente(request, id):
 
@@ -279,17 +339,3 @@ def editar_cliente(request, id):
         })
 
     return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
-
-def eliminar_cliente(request, id):
-    
-    if request.method=='POST':
-
-        cliente = Cliente.objects.get(id=id)
-
-        cliente.delete()
-
-        cliente = Cliente.objects.all()
-
-        contexto = {"cliente": cliente}
-
-        return render(request, "listaClientes.html", contexto)
