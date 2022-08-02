@@ -2,8 +2,8 @@ from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from WebApp.models import Productos, Empleado, Persona
-from WebApp.forms import FormProductos, FormEmpleado
+from WebApp.models import Productos, Empleado, Persona, Cliente
+from WebApp.forms import FormProductos, FormEmpleado, FormCliente
 
 # Create your views here.
 
@@ -217,3 +217,79 @@ def eliminar_empleado(request, id):
         contexto = {"empleado": empleado}
 
         return render(request, "listaEmpleados.html", contexto)
+
+def formularioClientes(request):
+
+    if request.method == "POST":
+
+        formularioClientes = FormCliente(request.POST, request.FILES)
+        
+        if formularioClientes.is_valid():
+
+            data = formularioClientes.cleaned_data
+
+            clientes = Cliente(
+                nombre_usuario=data["nombre_usuario"], 
+                email=data["email"], 
+                telefono=data["telefono"],
+            )
+            clientes.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioClientes= FormCliente(request.POST) 
+
+    return render(request, "formClientes.html", {"formularioClientes": formularioClientes})
+
+def lista_clientes(request):
+    clientes = Cliente.objects.all()
+
+    contexto= {"clientes": clientes}
+
+    return render(request, "listaClientes.html", contexto)
+
+def editar_cliente(request, id):
+
+    cliente = Cliente.objects.get(id=id)
+
+    if request.method == "POST":
+
+        formularioClientes= FormCliente(request.POST, request.FILES)
+        
+        if formularioClientes.is_valid():
+
+            data= formularioClientes.cleaned_data
+
+            cliente.nombre_usuario=data["nombre"]
+            cliente.email=data["email"]
+            cliente.telefono=data["telefono"]
+
+            cliente.save()
+
+            return render(request, "index.html")
+
+    else:
+        
+        formularioClientes= FormCliente(initial={
+            "nombre_usuario":cliente.nombre_usuario,
+            "email":cliente.email,
+            "telefono":cliente.telefono,
+        })
+
+    return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
+
+def eliminar_cliente(request, id):
+    
+    if request.method=='POST':
+
+        cliente = Cliente.objects.get(id=id)
+
+        cliente.delete()
+
+        cliente = Cliente.objects.all()
+
+        contexto = {"cliente": cliente}
+
+        return render(request, "listaClientes.html", contexto)

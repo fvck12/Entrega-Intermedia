@@ -25,3 +25,11 @@ class FormEmpleado(forms.Form):
         model = Empleado
         fields = ['sexo',]
         fields = ['horario',]
+
+class FormCliente(forms.Form):
+
+    nombre_de_usuario = forms.CharField()
+    email = forms.EmailField()
+    telefono = forms.IntegerField()
+
+    

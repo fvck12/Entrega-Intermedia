@@ -53,6 +53,8 @@ class Empleado(Persona):
     foto_empleado = models.ImageField(upload_to="Empleados/", height_field=None, width_field=None, max_length=None)
    
 class Cliente(Persona):
-    nombre_usuario = models.CharField(max_length=8)
+    nombre_usuario = models.CharField(max_length=8, blank=False)
+    email = models.EmailField(blank=False)
+    telefono = models.IntegerField(blank=True)
     
      
