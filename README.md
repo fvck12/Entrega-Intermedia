@@ -27,10 +27,8 @@ Pasos:
 
 admin/ administracion
 webapp/ 'Pagina inicial'
-
 webapp/formProductos/ 'Formulario de alta de producto'
 webapp/listaProductos/ 'Formulario de lista de productos en formato tabla'
-
 webapp/formEmpleado/ 'Formulario de alta de empleado'
 webapp/listaEmpleados/ 'Formulario de lista de empleado en formato tabla'
 
