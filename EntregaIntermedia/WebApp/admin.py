@@ -3,7 +3,7 @@ from import_export.admin import ImportExportMixin
 from .models import Productos, Empleado, Cliente
 
 class EmpleadosAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['nombre', 'apellido', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'salario', 'puesto', 'horario', 'foto_empleado']
+    list_display = ['nombre', 'apellido', 'edad', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'salario', 'puesto', 'horario', 'foto_empleado']
 
 class ProductosAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['nombre', 'stock', 'precio', 'Foto']

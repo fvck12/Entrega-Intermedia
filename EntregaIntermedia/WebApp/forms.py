@@ -12,6 +12,7 @@ class FormEmpleado(forms.ModelForm):
     
     nombre = forms.CharField()
     apellido = forms.CharField()
+    edad = forms.IntegerField()
     fecha_nacimiento = forms.DateField()
     dni = forms.IntegerField()
     email = forms.EmailField()
