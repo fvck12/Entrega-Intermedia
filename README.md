@@ -23,6 +23,18 @@ Pasos:
 
 * python manage.py runserver
 
+### Uso de la web
+
+* admin/ administracion
+* webapp/ 'Pagina inicial'
+* webapp/formProductos/ 'Formulario de alta de producto'
+* webapp/listaProductos/ 'Formulario de lista de productos en formato tabla'
+* webapp/formEmpleado/ 'Formulario de alta de empleado'
+* webapp/listaEmpleados/ 'Formulario de lista de empleado en formato tabla'
+
+webapp/formCliente/ 'Formulario de alta de cliente'
+webapp/listaClientes/ 'Formulario de lista de cliente en formato tabla'
+
 ## Developers
 
 Nicolas Sandoval
