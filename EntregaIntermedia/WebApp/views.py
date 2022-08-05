@@ -139,6 +139,7 @@ def formularioEmpleados(request):
                 direccion=data["direccion"], 
                 telefono=data["telefono"],
                 puesto=data["puesto"],
+                salario=data["salario"],
                 horario=data["horario"],
                 foto_empleado=data["foto_empleado"],
             )

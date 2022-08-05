@@ -1,43 +1,22 @@
+from tkinter import ALL
 from django import forms
-from WebApp.models import Empleado, Cliente
+from WebApp.models import Empleado, Cliente, Productos
 
-class FormProductos(forms.Form):
+class FormProductos(forms.ModelForm):
 
-    nombre= forms.CharField()
-    stock= forms.IntegerField()
-    precio= forms.IntegerField()
-    Foto= forms.ImageField()
+    class Meta:
+        model = Productos
+        fields = ('__all__')
 
 class FormEmpleado(forms.ModelForm):
-    
-    nombre = forms.CharField()
-    apellido = forms.CharField()
-    edad = forms.IntegerField()
-    fecha_nacimiento = forms.DateField()
-    dni = forms.IntegerField()
-    email = forms.EmailField()
-    direccion = forms.CharField()
-    telefono = forms.IntegerField()
-    puesto = forms.CharField()
-    foto_empleado = forms.ImageField()
 
     class Meta:
         model = Empleado
-        fields = ['sexo', 'horario', 'salario']
+        fields = ('__all__')
     
 
 class FormCliente(forms.ModelForm):
 
-    nombre = forms.CharField()
-    apellido = forms.CharField()
-    fecha_nacimiento = forms.DateField()
-    dni = forms.IntegerField()
-    email = forms.EmailField()
-    direccion = forms.CharField()
-    telefono = forms.IntegerField()
-    nombre_usuario = forms.CharField()
-    foto_cliente = forms.ImageField()
-
     class Meta:
         model = Cliente
-        fields = ['sexo']
+        fields = ('__all__')
