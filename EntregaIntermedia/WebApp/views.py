@@ -321,10 +321,17 @@ def editar_cliente(request, id):
         if formularioClientes.is_valid():
 
             data= formularioClientes.cleaned_data
-
-            cliente.nombre_usuario=data["nombre"]
+            
+            
+            cliente.nombre=data["nombre"]
+            cliente.apellido=data["apellido"]
+            cliente.fecha_nacimiento=data["fecha_nacimiento"]
+            cliente.dni=data["dni"]
             cliente.email=data["email"]
+            cliente.direccion=data["direccion"]
             cliente.telefono=data["telefono"]
+            cliente.nombre_usuario=data["nombre_usuario"]
+            cliente.foto_cliente=data["foto_cliente"]
 
             cliente.save()
 
@@ -333,9 +340,15 @@ def editar_cliente(request, id):
     else:
         
         formularioClientes= FormCliente(initial={
-            "nombre_usuario":cliente.nombre_usuario,
+            "nombre":cliente.nombre,
+            "apellido":cliente.apellido,
+            "fecha_nacimiento":cliente.fecha_nacimiento,
+            "dni":cliente.dni,
             "email":cliente.email,
+            "direccion":cliente.direccion,
             "telefono":cliente.telefono,
+            "nombre_usuario":cliente.nombre_usuario,
+            "foto_cliente":cliente.foto_cliente,
         })
 
     return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
