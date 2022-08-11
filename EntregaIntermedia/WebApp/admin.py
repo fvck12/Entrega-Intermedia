@@ -17,3 +17,4 @@ class ClientesAdmin(ImportExportMixin, admin.ModelAdmin):
 admin.site.register(Productos, ProductosAdmin)
 admin.site.register(Empleado, EmpleadosAdmin)
 admin.site.register(Cliente, ClientesAdmin)
+

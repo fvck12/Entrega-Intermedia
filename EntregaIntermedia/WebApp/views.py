@@ -5,6 +5,64 @@ from django.http import HttpResponse
 from WebApp.models import Productos, Empleado, Persona, Cliente
 from WebApp.forms import FormProductos, FormEmpleado, FormCliente
 
+#Loguin
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+
+############################## Menu's Principal ##############################
+
+def login_request (request):
+
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+
+            user = authenticate(username=usuario, password=contra)
+
+
+            if user is not None:
+                login(request, user)
+
+                return render(request, "webapp/", {"mensaje": f"Bienvenido{usuario}"})
+            
+            else:
+
+                return render(request, "webapp/", {"mensaje":"Error, datos erroneos"})
+            
+        else:
+
+                return render(request, "webapp/", {"mensaje": "Erorr, formulario erroneo"})
+    
+    form = AuthenticationForm()
+
+    return render (request, "login.html", {"form":form})
+
+
+def registro(request):
+    
+    if request.method =="POST":
+
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+
+            username = form.cleaned_data["username"]
+            form.save()
+            return render(request, "webapp/", {"mensaje":"Usuario creado"})
+
+    
+    else:
+        form = UserCreationForm()
+
+    return render(request, "registro.html", {"form": form})
+
+
+        
+
+
 ############################## Menu's Principal ##############################
 
 def inicio(request):
