@@ -1,8 +1,9 @@
 from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView, DeleteView, CreateView, DetailView, UpdateView
 
-from WebApp.models import Productos, Empleado, Persona, Cliente
+from WebApp.models import Productos, Empleado, Cliente
 from WebApp.forms import FormProductos, FormEmpleado, FormCliente
 
 ############################## Menu's Principal ##############################
@@ -119,39 +120,43 @@ def editar_producto(request, id):
 
 ############################## Empleados ##############################
 
-def formularioEmpleados(request):
+class ListarEmpleados(ListView):
+    model = Empleado
+    template_name = 'listaEmpleados.html'
 
-    if request.method == "POST":
+# def formularioEmpleados(request):
 
-        formularioEmpleados = FormEmpleado(request.POST, request.FILES)
+#     if request.method == "POST":
+
+#         formularioEmpleados = FormEmpleado(request.POST, request.FILES)
         
-        if formularioEmpleados.is_valid():
+#         if formularioEmpleados.is_valid():
 
-            data = formularioEmpleados.cleaned_data
+#             data = formularioEmpleados.cleaned_data
 
-            empleados = Empleado(
-                nombre=data["nombre"], 
-                apellido=data["apellido"],
-                sexo=data["sexo"],
-                fecha_nacimiento=data["fecha_nacimiento"], 
-                dni=data["dni"], 
-                email=data["email"], 
-                direccion=data["direccion"], 
-                telefono=data["telefono"],
-                puesto=data["puesto"],
-                salario=data["salario"],
-                horario=data["horario"],
-                foto_empleado=data["foto_empleado"],
-            )
-            empleados.save()
+#             empleados = Empleado(
+#                 nombre=data["nombre"], 
+#                 apellido=data["apellido"],
+#                 sexo=data["sexo"],
+#                 fecha_nacimiento=data["fecha_nacimiento"], 
+#                 dni=data["dni"], 
+#                 email=data["email"], 
+#                 direccion=data["direccion"], 
+#                 telefono=data["telefono"],
+#                 puesto=data["puesto"],
+#                 salario=data["salario"],
+#                 horario=data["horario"],
+#                 foto_empleado=data["foto_empleado"],
+#             )
+#             empleados.save()
 
-            return render(request, "index.html")
+#             return render(request, "index.html")
 
-    else:
+#     else:
         
-        formularioEmpleados= FormEmpleado(request.POST) 
+#         formularioEmpleados= FormEmpleado(request.POST) 
 
-    return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
+#     return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
 
 def busquedaEmpleado(request):
 
@@ -172,13 +177,6 @@ def buscarEmpleado(request):
         respuesta= "No enviaste datos"
 
     return HttpResponse(respuesta)
-
-def lista_empleados(request):
-    empleados = Empleado.objects.all()
-
-    contexto= {"empleados": empleados}
-
-    return render(request, "listaEmpleados.html", contexto)
 
 def eliminar_empleado(request, id):
         
@@ -353,3 +351,21 @@ def editar_cliente(request, id):
         })
 
     return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
+
+
+############################## Vistas basadas en clases ##############################
+
+class CrearEmpleados(CreateView):
+    model = Empleado
+    template_name = 'formEmpleados.html'
+    fields = ['nombre', 'apellido', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'salario', 'puesto', 'horario', 'foto_empleado']
+    success_url = '/webapp/listaEmpleados'
+
+# class ActualizarEmpleados(UpdateView):
+#     model = Empleado
+#     template_name = 'UpdateEmpleados.html'
+    
+    
+# class BorrarEmpleados(ListView):
+#     model = Empleado
+#     template_name = 'listaEmpleados.html'

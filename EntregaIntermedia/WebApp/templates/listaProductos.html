@@ -43,7 +43,9 @@
                             
                                 <tr>
                                     <td>
-                                    <img src="{{producto.Foto.url}}" width="100" height="100"> 
+                                        {% if producto.Foto %}
+                                            <img src="{{producto.Foto.url}}" width="100" height="100">
+                                        {% endif %}
                                     </td>
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.stock}}</td>

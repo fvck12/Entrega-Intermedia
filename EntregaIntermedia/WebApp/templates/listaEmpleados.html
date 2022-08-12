@@ -42,11 +42,13 @@
                         </tr>                   
                             <ul>
                             
-                                {% for empleado in empleados  %}
+                                {% for empleado in object_list  %}
                             
                                 <tr>
                                     <td>
-                                    <img src="{{empleado.foto_empleado.url}}" width="100" height="100"> 
+                                        {% if  empleado.foto_empleado%}
+                                            <img src="{{empleado.foto_empleado.url}}" width="100" height="100">
+                                        {% endif %}
                                     </td>
                                     <td>{{empleado.nombre}}</td>
                                     <td>{{empleado.edad}}</td> 
@@ -67,7 +69,7 @@
                                                    
                             </ul>                                                  
                     </table>
-                    <a href="{% url 'formEmpleado' %}">Añade Empleado</a> 
+                    <a href="{% url 'CrearEmpleados' %}">Añade Empleado</a> 
                 </div>
             </div>
         </article>

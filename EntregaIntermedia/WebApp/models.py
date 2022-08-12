@@ -7,8 +7,13 @@ from djmoney.models.fields import MoneyField
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)
     stock = models.IntegerField()
-    precio = models.IntegerField()
-    Foto = models.ImageField(upload_to="Productos/", height_field=None, width_field=None, max_length=None)
+    precio = MoneyField(
+        decimal_places=2,
+        default=1,
+        default_currency='USD',
+        max_digits=11,
+    )
+    Foto = models.ImageField(upload_to="Productos/", height_field=None, width_field=None, max_length=None, null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.nombre}'
@@ -53,14 +58,14 @@ class Empleado(Persona):
         default_currency='USD',
         max_digits=11,
     )
-    foto_empleado = models.ImageField(upload_to="Empleados/", height_field=None, width_field=None, max_length=None)
+    foto_empleado = models.ImageField(upload_to="Empleados/", height_field=None, width_field=None, max_length=None, null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.nombre}'
    
 class Cliente(Persona):
     nombre_usuario = models.CharField(max_length=8, blank=False)
-    foto_cliente = models.ImageField(upload_to="Clientes/", height_field=None, width_field=None, max_length=None, null=True)
+    foto_cliente = models.ImageField(upload_to="Clientes/", height_field=None, width_field=None, max_length=None, null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.nombre}'

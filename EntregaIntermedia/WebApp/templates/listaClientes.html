@@ -45,7 +45,9 @@
                             
                                 <tr>
                                     <td>
-                                    <img src="{{cliente.foto_cliente.url}}" width="100" height="100"> 
+                                        {% if cliente.foto_cliente %}
+                                            <img src="{{cliente.foto_cliente.url}}" width="100" height="100"> 
+                                        {% endif %} 
                                     </td>
                                     <td>{{cliente.nombre}}</td>
                                     <td>{{cliente.edad}}</td>
