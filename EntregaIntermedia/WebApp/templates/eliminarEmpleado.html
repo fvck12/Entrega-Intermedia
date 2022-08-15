@@ -4,7 +4,7 @@
 
 {% block titleBlock %}
 
-<title>Editar Empleado</title>
+<title>Eliminar Empleados</title>
 
 {% endblock titleBlock %}
 
@@ -23,23 +23,22 @@
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <h1><strong><center>Eliminar Empleados</center></strong></h1>
                     
                     <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-
-                        {{form.as_p}}
-
-                        <input type="submit" value="Enviar">
                         
+                        <p>Seguro que desea eliminar el empleado <b> {{empleado.nombre}} {{empleado.apellido}} </b> ?</p>
+                        
+                        <input type="submit" value="Confirmar">
                     </form>
-                    
+
                 </div>
             </div>
         </article>
-        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
 </html>
-{% endblock randomBlock %}
+{% endblock randomBlock %} 

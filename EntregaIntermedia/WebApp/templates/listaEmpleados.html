@@ -24,9 +24,12 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <h1><strong><center>Lista de Empleados</center></strong></h1>
-                    <form action= "{% url 'buscarEmpleado' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
+                    
+                    <form action= "{% url 'busquedaEmpleado' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
 
-                        <p>Busqueda: <input type= "text" name= "nombre" placeholder="Escriba aqui el empleado"> <input type="submit" value="Buscar"></p>                      
+                        <p>Busqueda: <input type= "text" name= "nombre" placeholder="Escriba aqui el empleado">
+                        
+                        <input type="submit" value="Buscar"></p>                      
                          
                      </form>
                     <table>
@@ -41,9 +44,7 @@
                             <th scope="col">Opciones</th>          
                         </tr>                   
                             <ul>
-                            
-                                {% for empleado in object_list  %}
-                            
+                                {% for empleado in object_list %}
                                 <tr>
                                     <td>
                                         {% if  empleado.foto_empleado%}
@@ -57,8 +58,9 @@
                                     <td>{{empleado.puesto}}</td>
                                     <td>{{empleado.salario}}</td>
                                     <td>
-                                        <form action= "{% url 'eliminarEmpleado' empleado.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                                            <button type="submit">Eliminar</button>
+                                        <button>
+                                            <a href="{% url 'borrarEmpleado' empleado.id %}">Eliminar</a>   
+                                        </button>
                                         <button>
                                             <a href="{% url 'editarEmpleado' empleado.id %}">Editar</a> 
                                         </button>

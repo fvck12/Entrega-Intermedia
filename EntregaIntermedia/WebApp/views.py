@@ -1,10 +1,10 @@
 from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import ListView, DeleteView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, DeleteView, CreateView, UpdateView
 
 from WebApp.models import Productos, Empleado, Cliente
-from WebApp.forms import FormProductos, FormEmpleado, FormCliente
+from WebApp.forms import FormProductos, FormCliente
 
 ############################## Menu's Principal ##############################
 
@@ -124,115 +124,37 @@ class ListarEmpleados(ListView):
     model = Empleado
     template_name = 'listaEmpleados.html'
 
-# def formularioEmpleados(request):
+class CrearEmpleados(CreateView):
+    model = Empleado
+    template_name = 'formEmpleados.html'
+    fields = ['nombre', 'apellido', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'salario', 'puesto', 'horario', 'foto_empleado']
+    success_url = '/webapp/listaEmpleados'
 
-#     if request.method == "POST":
+class ActualizarEmpleados(UpdateView):
+    model = Empleado
+    template_name = 'editarEmpleado.html'
+    fields = ('__all__')
+    success_url = '/webapp/listaEmpleados'
 
-#         formularioEmpleados = FormEmpleado(request.POST, request.FILES)
-        
-#         if formularioEmpleados.is_valid():
+class BusquedaEmpleado(ListView):
+    template_name = 'busquedaEmpleado.html'
+    model = Empleado
 
-#             data = formularioEmpleados.cleaned_data
+    def get_queryset(self):
+        print("Ingresando a la funcion busqueda....")
+        query = self.request.GET.get('nombre')
+        if query:
+            object_list = self.model.objects.filter(nombre__icontains=query)
+            print("Object_list: ", object_list)
+        else:
+            object_list = self.model.objects.none()
+        return object_list
 
-#             empleados = Empleado(
-#                 nombre=data["nombre"], 
-#                 apellido=data["apellido"],
-#                 sexo=data["sexo"],
-#                 fecha_nacimiento=data["fecha_nacimiento"], 
-#                 dni=data["dni"], 
-#                 email=data["email"], 
-#                 direccion=data["direccion"], 
-#                 telefono=data["telefono"],
-#                 puesto=data["puesto"],
-#                 salario=data["salario"],
-#                 horario=data["horario"],
-#                 foto_empleado=data["foto_empleado"],
-#             )
-#             empleados.save()
-
-#             return render(request, "index.html")
-
-#     else:
-        
-#         formularioEmpleados= FormEmpleado(request.POST) 
-
-#     return render(request, "formEmpleados.html", {"formularioEmpleados": formularioEmpleados})
-
-def busquedaEmpleado(request):
-
-    return render(request, "busquedaEmpleado.html")
-
-def buscarEmpleado(request):
-
-    if request.GET["nombre"]:
-
-        nombre= request.GET["nombre"]
-
-        empleados = Empleado.objects.filter(nombre__icontains=nombre)
-
-        return render(request, "resultadoBusqueda_empleado.html", {"empleados": empleados, "nombre": nombre})
-    
-    else:
-
-        respuesta= "No enviaste datos"
-
-    return HttpResponse(respuesta)
-
-def eliminar_empleado(request, id):
-        
-    if request.method=='POST':
-
-        empleado = Empleado.objects.get(id=id)
-
-        empleado.delete()
-
-        empleado = Empleado.objects.all()
-
-        contexto = {"empleado": empleado}
-
-        return render(request, "listaEmpleados.html", contexto)
-
-def editar_empleado(request, id):
-
-    empleado = Empleado.objects.get(id=id)
-
-    if request.method == "POST":
-
-        formularioEmpleados = FormEmpleado(request.POST, request.FILES)
-        
-        if formularioEmpleados.is_valid():
-
-            data= formularioEmpleados.cleaned_data
-
-            empleado.nombre=data["nombre"]
-            empleado.apellido=data["apellido"]
-            empleado.fecha_nacimiento=data["fecha_nacimiento"]
-            empleado.dni=data["dni"]
-            empleado.email=data["email"]
-            empleado.direccion=data["direccion"]
-            empleado.telefono=data["telefono"]
-            empleado.puesto=data["puesto"]
-            empleado.foto_empleado=data["foto_empleado"]
-
-            empleado.save()
-
-            return render(request, "index.html")
-
-    else:
-        
-        formularioEmpleados = FormEmpleado(initial={
-            "nombre":empleado.nombre,
-            "apellido":empleado.apellido,
-            "fecha_nacimiento":empleado.fecha_nacimiento,
-            "dni":empleado.dni,
-            "email":empleado.email,
-            "direccion":empleado.direccion,
-            "telefono":empleado.telefono,
-            "puesto":empleado.puesto,
-            "foto_empleado":empleado.foto_empleado,
-        })
-
-    return render(request, "editarEmpleado.html", {"formularioEmpleados": formularioEmpleados, "id": empleado.id})
+class BorrarEmpleados(DeleteView):
+    model = Empleado
+    template_name = 'eliminarEmpleado.html'
+    fields = ["nombre", "apellido"]
+    success_url = '/webapp/listaEmpleados'
 
 ############################## Clientes ##############################
 
@@ -352,20 +274,4 @@ def editar_cliente(request, id):
 
     return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
 
-
 ############################## Vistas basadas en clases ##############################
-
-class CrearEmpleados(CreateView):
-    model = Empleado
-    template_name = 'formEmpleados.html'
-    fields = ['nombre', 'apellido', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'salario', 'puesto', 'horario', 'foto_empleado']
-    success_url = '/webapp/listaEmpleados'
-
-# class ActualizarEmpleados(UpdateView):
-#     model = Empleado
-#     template_name = 'UpdateEmpleados.html'
-    
-    
-# class BorrarEmpleados(ListView):
-#     model = Empleado
-#     template_name = 'listaEmpleados.html'

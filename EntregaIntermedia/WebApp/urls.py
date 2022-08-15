@@ -2,7 +2,7 @@ from django.urls import path
 from WebApp.views import inicio, about, contact 
 from WebApp.views import formularioClientes, busquedaCliente, buscarCliente, lista_clientes, eliminar_cliente, editar_cliente
 from WebApp.views import formularioProductos, busquedaProductos, buscar, lista_productos, eliminar_producto, editar_producto
-from WebApp.views import ListarEmpleados, CrearEmpleados, busquedaEmpleado, buscarEmpleado, eliminar_empleado, editar_empleado
+from WebApp.views import ListarEmpleados, CrearEmpleados, BusquedaEmpleado, BorrarEmpleados, ActualizarEmpleados
 
 urlpatterns = [
     path('', inicio, name="inicio"),
@@ -17,11 +17,10 @@ urlpatterns = [
     path('editarProducto/<int:id>', editar_producto, name="editarProducto"),
 
     path('formEmpleado/', CrearEmpleados.as_view(), name="CrearEmpleados"),
-    path('busquedaEmpleado/', busquedaEmpleado, name="busquedaEmpleado"),
-    path('buscarEmpleado/', buscarEmpleado, name="buscarEmpleado"),
     path('listaEmpleados/', ListarEmpleados.as_view(), name="listaEmpleados"),
-    path('editarEmpleado/<int:id>', editar_empleado, name="editarEmpleado"),
-    path('eliminarEmpleado/<int:id>', eliminar_empleado, name="eliminarEmpleado"),
+    path('editarEmpleado/<int:pk>', ActualizarEmpleados.as_view(), name="editarEmpleado"),
+    path('borrarEmpleado/<int:pk>', BorrarEmpleados.as_view(), name="borrarEmpleado"),
+    path('busquedaEmpleado/', BusquedaEmpleado.as_view(), name="busquedaEmpleado"),
 
     path('formCliente/', formularioClientes, name="formCliente"),
     path('busquedaCliente/', busquedaCliente, name="busquedaCliente"),
