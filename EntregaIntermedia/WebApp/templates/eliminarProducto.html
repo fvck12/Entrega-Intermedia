@@ -27,7 +27,7 @@
                     
                     <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                         
-                        <p>Seguro que desea eliminar el producto <b> {{producto.nombre}} stock {{producto.stock}}</b> ?</p>
+                        <p>Seguro que desea eliminar el producto <b>{{producto.nombre}} {{producto.stock}}</b> ?</p>
                         
                         <input type="submit" value="Confirmar">
                     </form>
