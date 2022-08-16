@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView
 
 from WebApp.models import Productos, Empleado, Cliente
-from WebApp.forms import FormProductos, FormCliente
 
 ############################## Menu's Principal ##############################
 
@@ -196,120 +195,40 @@ class BorrarEmpleados(DeleteView):
 
 ############################## Clientes ##############################
 
-def formularioClientes(request):
+class CrearCliente(CreateView):
+    model = Cliente
+    template_name = 'formClientes.html'
+    fields = ['nombre', 'apellido', 'nombre_usuario', 'sexo', 'fecha_nacimiento', 'dni', 'email', 'direccion', 'telefono', 'foto_cliente']
+    success_url = '/webapp/listaClientes' 
 
-    if request.method == "POST":
+class BusquedaCliente(ListView):
+    template_name = 'resultadoBusqueda_cliente.html'
+    model = Cliente
 
-        formularioClientes = FormCliente(request.POST, request.FILES)
-        
-        if formularioClientes.is_valid():
+    def get_queryset(self):
+        print("Ingresando a la funcion busqueda....")
+        query = self.request.GET.get('nombre')
+        if query:
+            object_list = self.model.objects.filter(nombre__icontains=query)
+            print("Object_list: ", object_list)
+        else:
+            object_list = self.model.objects.none()
+        return object_list
 
-            data = formularioClientes.cleaned_data
+class ListarClientes(ListView):
+    model = Cliente
+    template_name = 'listaClientes.html'
 
-            clientes = Cliente( 
-                nombre=data["nombre"], 
-                apellido=data["apellido"],
-                nombre_usuario=data["nombre_usuario"],
-                sexo=data["sexo"],
-                fecha_nacimiento=data["fecha_nacimiento"], 
-                dni=data["dni"], 
-                email=data["email"], 
-                direccion=data["direccion"], 
-                telefono=data["telefono"],
-                foto_cliente=data["foto_cliente"],
-            )
-            clientes.save()
+class BorrarCliente(DeleteView):
+    model = Cliente
+    template_name = 'eliminarCliente.html'
+    fields = ["nombre", "apellido"]
+    success_url = '/webapp/listaClientes'
 
-            return render(request, "index.html")
-
-    else:
-        
-        formularioClientes= FormCliente(request.POST) 
-
-    return render(request, "formClientes.html", {"formularioClientes": formularioClientes})
-
-def busquedaCliente(request):
-
-    return render(request, "busquedaCliente.html")
-
-def buscarCliente(request):
-
-    if request.GET["nombre"]:
-
-        nombre= request.GET["nombre"]
-
-        clientes = Cliente.objects.filter(nombre__icontains=nombre)
-
-        return render(request, "resultadoBusqueda_cliente.html", {"clientes": clientes, "nombre": nombre})
-    
-    else:
-
-        respuesta= "No enviaste datos"
-
-    return HttpResponse(respuesta)
-
-def lista_clientes(request):
-    clientes = Cliente.objects.all()
-
-    contexto= {"clientes": clientes}
-
-    return render(request, "listaClientes.html", contexto)
-
-def eliminar_cliente(request, id):
-    
-    if request.method=='POST':
-
-        cliente = Cliente.objects.get(id=id)
-
-        cliente.delete()
-
-        cliente = Cliente.objects.all()
-
-        contexto = {"cliente": cliente}
-
-        return render(request, "listaClientes.html", contexto)
-
-def editar_cliente(request, id):
-
-    cliente = Cliente.objects.get(id=id)
-
-    if request.method == "POST":
-
-        formularioClientes= FormCliente(request.POST, request.FILES)
-        
-        if formularioClientes.is_valid():
-
-            data= formularioClientes.cleaned_data
-            
-            
-            cliente.nombre=data["nombre"]
-            cliente.apellido=data["apellido"]
-            cliente.fecha_nacimiento=data["fecha_nacimiento"]
-            cliente.dni=data["dni"]
-            cliente.email=data["email"]
-            cliente.direccion=data["direccion"]
-            cliente.telefono=data["telefono"]
-            cliente.nombre_usuario=data["nombre_usuario"]
-            cliente.foto_cliente=data["foto_cliente"]
-
-            cliente.save()
-
-            return render(request, "index.html")
-
-    else:
-        
-        formularioClientes= FormCliente(initial={
-            "nombre":cliente.nombre,
-            "apellido":cliente.apellido,
-            "fecha_nacimiento":cliente.fecha_nacimiento,
-            "dni":cliente.dni,
-            "email":cliente.email,
-            "direccion":cliente.direccion,
-            "telefono":cliente.telefono,
-            "nombre_usuario":cliente.nombre_usuario,
-            "foto_cliente":cliente.foto_cliente,
-        })
-
-    return render(request, "editarCliente.html", {"formularioClientes": formularioClientes, "id": cliente.id})
+class ActualizarCliente(UpdateView):
+    model = Cliente
+    template_name = 'editarCliente.html'
+    fields = ('__all__')
+    success_url = '/webapp/listaClientes'
 
 ############################## Vistas basadas en clases ##############################

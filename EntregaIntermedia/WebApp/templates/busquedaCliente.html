@@ -4,7 +4,7 @@
 
 {% block titleBlock %}
 
-<title>Inicio</title>
+<title>Busqueda de Cliente</title>
 
 {% endblock titleBlock %}
 
@@ -23,19 +23,53 @@
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
-                    
-                    <form action= "{% url 'buscarCliente' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
-
-                       <p>Cliente: <input type= "text" name= "nombre"></p>
-
-                        <input type="submit" value="Buscar">
-                        
-                    </form>
-                    
+                    <h1><strong><center>Busqueda de clientes</center></strong></h1>
+                        <form method="GET" enctype="multipart/form-data">{% csrf_token %}
+                            <p>Busqueda: <input type= "text" name= "nombre" placeholder="Escriba aqui el cliente">
+                                <input type="submit" value="Buscar"></p>                      
+                        </form>
+                        <p>Estamos buscando el cliente: <strong>{{request.GET.nombre}}</strong></p>
+                        <table>
+                            <tr>
+                                <th scope="col">Foto</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Nombre de Nombre de Usuario</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">Fecha de Nacimiento</th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Email</th>    
+                                <th scope="col">Direccion</th>    
+                                <th scope="col">Telefono</th>    
+                            </tr>
+                            {% if object_list %}
+                                <ul>    
+                                    {% for cliente in object_list %}
+                                        <tr>
+                                            <td>
+                                                {% if  cliente.foto_cliente %}
+                                                    <img src="{{cliente.foto_cliente.url}}" width="100" height="100">
+                                                {% endif %}
+                                            </td>
+                                            <td>{{cliente.nombre}}</td>
+                                            <td>{{cliente.apellido}}</td>
+                                            <td>{{cliente.nombre_usuario}}</td>
+                                            <td>{{cliente.sexo}}</td> 
+                                            <td>{{cliente.fecha_nacimiento}}</td> 
+                                            <td>{{cliente.dni}}</td> 
+                                            <td>{{cliente.email}}</td> 
+                                            <td>{{cliente.direccion}}</td> 
+                                            <td>{{cliente.telefono}}</td>                               
+                                        </tr>
+                                    {% endfor %}  
+                                </ul>
+                            {% else %}
+                                <p>No hubo coincidencias para <strong>{{request.GET.nombre}}</strong></p>
+                            {% endif %}
+                        </table>
                 </div>
             </div>
         </article>
-        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

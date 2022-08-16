@@ -55,8 +55,9 @@
                                     <td>{{cliente.telefono}}</td> 
                                     <td>{{cliente.nombre_usuario}}</td> 
                                     <td>
-                                        <form action= "{% url 'eliminarCliente' cliente.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                                            <button type="submit">Eliminar</button>
+                                        <button>
+                                            <a href="{% url 'borrarCliente' cliente.id %}">Eliminar</a>   
+                                        </button>
                                         <button>
                                             <a href="{% url 'editarCliente' cliente.id %}">Editar</a> 
                                         </button>
@@ -67,7 +68,7 @@
                                                    
                             </ul>                                                  
                     </table>
-                    <a href="{% url 'formCliente' %}">Añade Cliente</a> 
+                    <a href="{% url 'CrearCliente' %}">Añade Cliente</a> 
                 </div>
             </div>
         </article>

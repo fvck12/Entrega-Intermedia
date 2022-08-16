@@ -4,13 +4,13 @@
 
 {% block titleBlock %}
 
-<title>Formulario Clientes</title>
+<title>Eliminar Clientes</title>
 
 {% endblock titleBlock %}
 
 {% block randomBlock %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{% static 'assets/img/Clientes_Banner.jpg' %}')">
+        <header class="masthead" style="background-image: url('{% static 'assets/img/herramientas-banner.jpg' %}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -23,23 +23,22 @@
         <article class="mb-4">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <h1><strong><center>Eliminar Clientes</center></strong></h1>
                     
-                    <form action= "{% url 'CrearEmpleados' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-
-                        {{form.as_p}}
-
-                        <input type="submit" value="Enviar">
+                    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                         
+                        <p>Seguro que desea eliminar el cliente <b> {{cliente.nombre}} {{cliente.apellido}} </b> ?</p>
+                        
+                        <input type="submit" value="Confirmar">
                     </form>
-                    
+
                 </div>
             </div>
         </article>
-        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
 </html>
-{% endblock randomBlock %}
+{% endblock randomBlock %} 
