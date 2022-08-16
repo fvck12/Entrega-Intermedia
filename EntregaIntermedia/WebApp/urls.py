@@ -9,11 +9,11 @@ urlpatterns = [
     path('about', about, name="about"),
     path('contact/', contact, name="contact"),
 
-    path('formProductos/', CrearProducto.as_view(), name="CrearProductos"),
+    path('formProducto/', CrearProducto.as_view(), name="CrearProductos"),
     path('busquedaProductos/', BusquedaProducto.as_view(), name="busquedaProductos"),
     path('listaProductos/', ListarProductos.as_view(), name="listaProductos"),
-    path('eliminarProducto/<int:id>', BorrarProducto.as_view(), name="eliminarProducto"),
-    path('editarProducto/<int:id>', ActualizarProducto.as_view(), name="editarProducto"),
+    path('eliminarProducto/<int:pk>', BorrarProducto.as_view(), name="eliminarProducto"),
+    path('editarProducto/<int:pk>', ActualizarProducto.as_view(), name="editarProducto"),
 
     path('formEmpleado/', CrearEmpleados.as_view(), name="CrearEmpleados"),
     path('listaEmpleados/', ListarEmpleados.as_view(), name="listaEmpleados"),

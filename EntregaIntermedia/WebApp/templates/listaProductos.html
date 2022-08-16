@@ -24,7 +24,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <h1><strong><center>Lista de productos</center></strong></h1>
-                    <form action= "{% url 'buscar' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
+                    <form action= "{% url 'busquedaProductos' %}" method="GET" enctype="multipart/form-data">{% csrf_token %}
 
                         <p>Busqueda: <input type= "text" name= "nombre" placeholder="Escriba aqui el producto"> <input type="submit" value="Buscar"></p>                      
                          
@@ -39,7 +39,7 @@
                         </tr>                   
                             <ul>
                             
-                                {% for producto in productos  %}
+                                {% for producto in object_list  %}
                             
                                 <tr>
                                     <td>
@@ -51,8 +51,9 @@
                                     <td>{{producto.stock}}</td>
                                     <td>{{producto.precio}}</td> 
                                     <td>
-                                        <form action= "{% url 'eliminarProducto' producto.id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                                            <button type="submit">Eliminar</button>
+                                        <button>
+                                            <a href="{% url 'eliminarProducto' producto.id %}">Eliminar</a>   
+                                        </button>
                                         <button>
                                             <a href="{% url 'editarProducto' producto.id %}">Editar</a> 
                                         </button>
@@ -63,7 +64,7 @@
                                                    
                             </ul>                                                  
                     </table>
-                    <a href="{% url 'formProductos' %}">Añade producto</a> 
+                    <a href="{% url 'CrearProductos' %}">Añade producto</a> 
                 </div>
             </div>
         </article>

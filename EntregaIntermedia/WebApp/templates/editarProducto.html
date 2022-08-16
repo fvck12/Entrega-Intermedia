@@ -24,9 +24,9 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     
-                    <form action= "{% url 'editarProducto' id %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
 
-                        {{formularioProductos.as_p}}
+                        {{form.as_p}}
 
                         <input type="submit" value="Enviar">
                         

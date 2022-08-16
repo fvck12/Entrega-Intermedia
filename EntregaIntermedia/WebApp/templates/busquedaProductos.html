@@ -1,0 +1,76 @@
+{% extends 'father.html' %}
+
+{% load static %}
+
+{% block titleBlock %}
+
+<title>Busqueda de Producto</title>
+
+{% endblock titleBlock %}
+
+{% block randomBlock %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'assets/img/herramientas-banner.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <h1><strong><center>Busqueda de productos</center></strong></h1>
+                        <form method="GET" enctype="multipart/form-data">{% csrf_token %}
+                            <p>Busqueda: <input type= "text" name= "nombre" placeholder="Escriba aqui el producto">
+                                <input type="submit" value="Buscar"></p>                      
+                        </form>
+                        <p>Estamos buscando el producto: <strong>{{request.GET.nombre}}</strong></p>
+                        <table>
+                            <tr>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Opciones</th>   
+                            </tr>
+                            {% if object_list %}
+                                <ul>    
+                                    {% for producto in object_list %}
+                                        <tr>
+                                            <td>
+                                                {% if  producto.foto_empleado %}
+                                                    <img src="{{producto.foto.url}}" width="100" height="100">
+                                                {% endif %}
+                                            </td>
+                                            <td>{{producto.nombre}}</td>
+                                            <td>{{producto.stock}}</td>
+                                            <td>{{producto.precio}}</td> 
+                                            <td>
+                                                <button>
+                                                    <a href="{% url 'eliminarProducto' producto.id %}">Eliminar</a>   
+                                                </button>
+                                                 <button>
+                                                 <a href="{% url 'editarProducto' producto.id %}">Editar</a> 
+                                                </button> 
+                                            </td>                                 
+                                        </tr>
+                                    {% endfor %}  
+                                </ul>
+                            {% else %}
+                                <p>No hubo coincidencias para: <strong>{{request.GET.nombre}}</strong></p>
+                            {% endif %}
+                        </table>
+                </div>
+            </div>
+        </article>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+{% endblock randomBlock %}

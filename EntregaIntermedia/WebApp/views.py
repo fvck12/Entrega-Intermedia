@@ -24,7 +24,7 @@ def contact(request):
 
 class CrearProducto(CreateView):
     model = Productos
-    template_name = 'formProductos.html'
+    template_name = 'formProducto.html'
     fields = ['nombre', 'stock', 'precio', 'Foto']
     success_url = '/webapp/listaProductos'
 
@@ -101,6 +101,7 @@ class ListarProductos(ListView):
 class BorrarProducto(DeleteView):
     model = Productos
     template_name = 'eliminarProducto.html'
+    fields = ["nombre", "stock"]
     success_url = '/webapp/listaProductos'
 
 # def eliminar_producto(request, id):
