@@ -1,20 +1,19 @@
 from django.urls import path
 from WebApp.views import inicio, about, contact 
 from WebApp.views import formularioClientes, busquedaCliente, buscarCliente, lista_clientes, eliminar_cliente, editar_cliente
-from WebApp.views import formularioProductos, busquedaProductos, buscar, lista_productos, eliminar_producto, editar_producto
-from WebApp.views import ListarEmpleados, CrearEmpleados, BusquedaEmpleado, BorrarEmpleados, ActualizarEmpleados
+from WebApp.views import CrearProducto, ListarProductos, BusquedaProducto, BorrarProducto, ActualizarProducto
+from WebApp.views import ListarEmpleados, CrearEmpleados, BusquedaEmpleado, BorrarEmpleados, ActualizarEmpleados 
 
 urlpatterns = [
     path('', inicio, name="inicio"),
     path('about', about, name="about"),
     path('contact/', contact, name="contact"),
 
-    path('formProductos/', formularioProductos, name="formProductos"),
-    path('busquedaProductos/', busquedaProductos, name="busquedaProductos"),
-    path('buscar/', buscar, name="buscar"),
-    path('listaProductos/', lista_productos, name="listaProductos"),
-    path('eliminarProducto/<int:id>', eliminar_producto, name="eliminarProducto"),
-    path('editarProducto/<int:id>', editar_producto, name="editarProducto"),
+    path('formProductos/', CrearProducto.as_view(), name="CrearProductos"),
+    path('busquedaProductos/', BusquedaProducto.as_view(), name="busquedaProductos"),
+    path('listaProductos/', ListarProductos.as_view(), name="listaProductos"),
+    path('eliminarProducto/<int:id>', BorrarProducto.as_view(), name="eliminarProducto"),
+    path('editarProducto/<int:id>', ActualizarProducto.as_view(), name="editarProducto"),
 
     path('formEmpleado/', CrearEmpleados.as_view(), name="CrearEmpleados"),
     path('listaEmpleados/', ListarEmpleados.as_view(), name="listaEmpleados"),

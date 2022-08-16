@@ -22,101 +22,138 @@ def contact(request):
 
 ############################## Productos ##############################
 
-def formularioProductos(request):
+class CrearProducto(CreateView):
+    model = Productos
+    template_name = 'formProductos.html'
+    fields = ['nombre', 'stock', 'precio', 'Foto']
+    success_url = '/webapp/listaProductos'
 
-    if request.method == "POST":
+# def formularioProductos(request):
 
-        formularioProductos= FormProductos(request.POST, request.FILES)
+#     if request.method == "POST":
+
+#         formularioProductos= FormProductos(request.POST, request.FILES)
         
-        if formularioProductos.is_valid():
+#         if formularioProductos.is_valid():
 
-            data= formularioProductos.cleaned_data
+#             data= formularioProductos.cleaned_data
 
-            productos = Productos(nombre=data["nombre"], stock=data["stock"], precio=data["precio"], Foto=data["Foto"])
-            productos.save()
+#             productos = Productos(nombre=data["nombre"], stock=data["stock"], precio=data["precio"], Foto=data["Foto"])
+#             productos.save()
 
-            return render(request, "index.html")
+#             return render(request, "index.html")
 
-    else:
+#     else:
         
-        formularioProductos= FormProductos(request.POST) 
+#         formularioProductos= FormProductos(request.POST) 
 
-    return render(request, "formProductos.html", {"formularioProductos": formularioProductos})
+#     return render(request, "formProductos.html", {"formularioProductos": formularioProductos})
 
-def busquedaProductos(request):
+class BusquedaProducto(ListView):
+    template_name = 'busquedaProductos.html'
+    model = Productos
 
-    return render(request, "busquedaProducto.html")
+    def get_queryset(self):
+        print("Ingresando a la funcion busqueda....")
+        query = self.request.GET.get('nombre')
+        if query:
+            object_list = self.model.objects.filter(nombre__icontains=query)
+            print("Object_list: ", object_list)
+        else:
+            object_list = self.model.objects.none()
+        return object_list
 
-def buscar(request):
+# def busquedaProductos(request):
 
-    if request.GET["nombre"]:
+#     return render(request, "busquedaProducto.html")
 
-        nombre= request.GET["nombre"]
+# def buscar(request):
 
-        productos = Productos.objects.filter(nombre__icontains=nombre)
+#     if request.GET["nombre"]:
 
-        return render(request, "resultadoBusqueda.html", {"productos": productos, "nombre": nombre})
+#         nombre= request.GET["nombre"]
+
+#         productos = Productos.objects.filter(nombre__icontains=nombre)
+
+#         return render(request, "resultadoBusqueda.html", {"productos": productos, "nombre": nombre})
     
-    else:
+#     else:
 
-        respuesta= "No enviaste datos"
+#         respuesta= "No enviaste datos"
 
 
 
-    return HttpResponse(respuesta)
+#     return HttpResponse(respuesta)
 
-def lista_productos(request):
-    productos = Productos.objects.all()
 
-    contexto= {"productos": productos}
+class ListarProductos(ListView):
+    model = Productos
+    template_name = 'listaProductos.html'
 
-    return render(request, "listaProductos.html", contexto)
 
-def eliminar_producto(request, id):
+# def lista_productos(request):
+#     productos = Productos.objects.all()
+
+#     contexto= {"productos": productos}
+
+#     return render(request, "listaProductos.html", contexto)
+
+class BorrarProducto(DeleteView):
+    model = Productos
+    template_name = 'eliminarProducto.html'
+    success_url = '/webapp/listaProductos'
+
+# def eliminar_producto(request, id):
     
-    if request.method=='POST':
+#     if request.method=='POST':
 
-        productos = Productos.objects.get(id=id)
+#         productos = Productos.objects.get(id=id)
 
-        productos.delete()
+#         productos.delete()
 
-        productos = Productos.objects.all()
+#         productos = Productos.objects.all()
 
-        contexto= {"productos": productos}
+#         contexto= {"productos": productos}
 
-        return render(request, "listaProductos.html", contexto)
+#         return render(request, "listaProductos.html", contexto)
+
+class ActualizarProducto(UpdateView):
+    model = Productos
+    template_name = 'editarProducto.html'
+    fields = ('__all__')
+    success_url = '/webapp/listaProductos'
         
-def editar_producto(request, id):
+# def editar_producto(request, id):
 
-    productos = Productos.objects.get(id=id)
+#     productos = Productos.objects.get(id=id)
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        formularioProductos= FormProductos(request.POST, request.FILES)
+#         formularioProductos= FormProductos(request.POST, request.FILES)
         
-        if formularioProductos.is_valid():
+#         if formularioProductos.is_valid():
 
-            data= formularioProductos.cleaned_data
+#             data= formularioProductos.cleaned_data
 
-            productos.nombre=data["nombre"]
-            productos.stock=data["stock"] 
-            productos.precio=data["precio"]
-            productos.Foto=data["Foto"]
+#             productos.nombre=data["nombre"]
+#             productos.stock=data["stock"] 
+#             productos.precio=data["precio"]
+#             productos.Foto=data["Foto"]
 
-            productos.save()
+#             productos.save()
 
-            return render(request, "index.html")
+#             return render(request, "index.html")
 
-    else:
+#     else:
         
-        formularioProductos= FormProductos(initial={
-            "nombre":productos.nombre,
-            "stock":productos.stock,
-            "precio":productos.precio,
-            "Foto":productos.Foto,
-        })
+#         formularioProductos= FormProductos(initial={
+#             "nombre":productos.nombre,
+#             "stock":productos.stock,
+#             "precio":productos.precio,
+#             "Foto":productos.Foto,
+#         })
 
-    return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
+#     return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
 
 ############################## Empleados ##############################
 
