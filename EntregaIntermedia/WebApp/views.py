@@ -27,26 +27,6 @@ class CrearProducto(CreateView):
     fields = ['nombre', 'stock', 'precio', 'Foto']
     success_url = '/webapp/listaProductos'
 
-# def formularioProductos(request):
-
-#     if request.method == "POST":
-
-#         formularioProductos= FormProductos(request.POST, request.FILES)
-        
-#         if formularioProductos.is_valid():
-
-#             data= formularioProductos.cleaned_data
-
-#             productos = Productos(nombre=data["nombre"], stock=data["stock"], precio=data["precio"], Foto=data["Foto"])
-#             productos.save()
-
-#             return render(request, "index.html")
-
-#     else:
-        
-#         formularioProductos= FormProductos(request.POST) 
-
-#     return render(request, "formProductos.html", {"formularioProductos": formularioProductos})
 
 class BusquedaProducto(ListView):
     template_name = 'busquedaProductos.html'
@@ -62,40 +42,11 @@ class BusquedaProducto(ListView):
             object_list = self.model.objects.none()
         return object_list
 
-# def busquedaProductos(request):
-
-#     return render(request, "busquedaProducto.html")
-
-# def buscar(request):
-
-#     if request.GET["nombre"]:
-
-#         nombre= request.GET["nombre"]
-
-#         productos = Productos.objects.filter(nombre__icontains=nombre)
-
-#         return render(request, "resultadoBusqueda.html", {"productos": productos, "nombre": nombre})
-    
-#     else:
-
-#         respuesta= "No enviaste datos"
-
-
-
-#     return HttpResponse(respuesta)
-
 
 class ListarProductos(ListView):
     model = Productos
     template_name = 'listaProductos.html'
 
-
-# def lista_productos(request):
-#     productos = Productos.objects.all()
-
-#     contexto= {"productos": productos}
-
-#     return render(request, "listaProductos.html", contexto)
 
 class BorrarProducto(DeleteView):
     model = Productos
@@ -103,57 +54,13 @@ class BorrarProducto(DeleteView):
     fields = ["nombre", "stock"]
     success_url = '/webapp/listaProductos'
 
-# def eliminar_producto(request, id):
-    
-#     if request.method=='POST':
-
-#         productos = Productos.objects.get(id=id)
-
-#         productos.delete()
-
-#         productos = Productos.objects.all()
-
-#         contexto= {"productos": productos}
-
-#         return render(request, "listaProductos.html", contexto)
 
 class ActualizarProducto(UpdateView):
     model = Productos
     template_name = 'editarProducto.html'
     fields = ('__all__')
     success_url = '/webapp/listaProductos'
-        
-# def editar_producto(request, id):
 
-#     productos = Productos.objects.get(id=id)
-
-#     if request.method == "POST":
-
-#         formularioProductos= FormProductos(request.POST, request.FILES)
-        
-#         if formularioProductos.is_valid():
-
-#             data= formularioProductos.cleaned_data
-
-#             productos.nombre=data["nombre"]
-#             productos.stock=data["stock"] 
-#             productos.precio=data["precio"]
-#             productos.Foto=data["Foto"]
-
-#             productos.save()
-
-#             return render(request, "index.html")
-
-#     else:
-        
-#         formularioProductos= FormProductos(initial={
-#             "nombre":productos.nombre,
-#             "stock":productos.stock,
-#             "precio":productos.precio,
-#             "Foto":productos.Foto,
-#         })
-
-#     return render(request, "editarProducto.html", {"formularioProductos": formularioProductos, "id": productos.id})
 
 ############################## Empleados ##############################
 
@@ -202,7 +109,7 @@ class CrearCliente(CreateView):
     success_url = '/webapp/listaClientes' 
 
 class BusquedaCliente(ListView):
-    template_name = 'resultadoBusqueda_cliente.html'
+    template_name = 'busquedaCliente.html'
     model = Cliente
 
     def get_queryset(self):
