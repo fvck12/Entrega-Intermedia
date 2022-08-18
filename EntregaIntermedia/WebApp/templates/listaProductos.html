@@ -2,12 +2,13 @@
 
 {% load static %}
 
+
 {% block titleBlock %}
 
 <title>Lista de Productos</title>
 
 {% endblock titleBlock %}
-
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
 {% block randomBlock %}
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('{% static 'assets/img/herramientas-banner.jpg' %}')">
@@ -31,42 +32,23 @@
                         
                         <input type="submit" value="Buscar"></p>                      
                          
-                     </form>
-                    <table>
-                        <tr>
-                            <th scope="col">Imagen</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Opciones</th>                       
-                        </tr>                   
-                            <ul>
-                            
+                    </form>
+                    
                                 {% for producto in object_list  %}
-                            
-                                <tr>
-                                    <td>
-                                        {% if producto.Foto %}
-                                            <img src="{{producto.Foto.url}}" width="100" height="100">
-                                        {% endif %}
-                                    </td>
-                                    <td>{{producto.nombre}}</td>
-                                    <td>{{producto.stock}}</td>
-                                    <td>{{producto.precio}}</td> 
-                                    <td>
-                                        <button>
-                                            <a href="{% url 'eliminarProducto' producto.id %}">Eliminar</a>   
-                                        </button>
-                                        <button>
-                                            <a href="{% url 'editarProducto' producto.id %}">Editar</a> 
-                                        </button>
-
-                                    </td>                              
-                                </tr>                           
-                                {% endfor %}   
-                                                   
-                            </ul>                                                  
-                    </table>
+                                <div class="card" style="width: 18rem;">
+                                    {% if producto.Foto %}
+                                    <img src="{{producto.Foto.url}}" class="card-img-top" alt="...">
+                                    {% endif %}
+                                    <div class="card-body">
+                                      <h5 class="card-title">{{producto.nombre}}</h5>
+                                      <p class="card-text">{{producto.stock}}</p>
+                                      <p class="card-text">{{producto.precio}}</p>                                      
+                                      <a href="{% url 'eliminarProducto' producto.id %}" class="btn btn-primary">Eliminar</a>
+                                      <a href="{% url 'editarProducto' producto.id %}" class="btn btn-primary">Editar</a>
+                                    </div>
+                                </div>                            
+                                {% endfor %}                  
+                   
                     <a href="{% url 'CrearProductos' %}">Añade producto</a> 
                 </div>
             </div>

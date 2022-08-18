@@ -46,6 +46,7 @@ class BusquedaProducto(ListView):
 class ListarProductos(ListView):
     model = Productos
     template_name = 'listaProductos.html'
+    paginate_by: 10
 
 
 class BorrarProducto(DeleteView):
