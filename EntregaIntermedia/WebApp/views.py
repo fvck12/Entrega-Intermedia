@@ -51,7 +51,7 @@ class ListarProductos(ListView):
 class BorrarProducto(DeleteView):
     model = Productos
     template_name = 'eliminarProducto.html'
-    fields = ["nombre", "stock"]
+    fields = ('__all__')
     success_url = '/webapp/listaProductos'
 
 
@@ -97,7 +97,7 @@ class BusquedaEmpleado(ListView):
 class BorrarEmpleados(DeleteView):
     model = Empleado
     template_name = 'eliminarEmpleado.html'
-    fields = ["nombre", "apellido"]
+    fields = ('__all__')
     success_url = '/webapp/listaEmpleados'
 
 ############################## Clientes ##############################
@@ -129,7 +129,7 @@ class ListarClientes(ListView):
 class BorrarCliente(DeleteView):
     model = Cliente
     template_name = 'eliminarCliente.html'
-    fields = ["nombre", "apellido"]
+    fields = ('__all__')
     success_url = '/webapp/listaClientes'
 
 class ActualizarCliente(UpdateView):
